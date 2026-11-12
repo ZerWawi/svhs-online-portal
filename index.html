@@ -92,7 +92,6 @@ function openLogin(role){document.getElementById('loginModal').classList.add('sh
 function closeLogin(){document.getElementById('loginModal').classList.remove('show')}
 function demoLogin(){document.getElementById('demoResult').style.display='block'}
 function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
-function showInfo(){alert('The SVHS Online Portal is being designed as a central digital platform for school announcements, learning resources, and services for administrators, teachers, learners, and parents. This preview contains sample content only.')}
 document.getElementById('loginModal').addEventListener('click',e=>{if(e.target.id==='loginModal')closeLogin()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
 </script><!-- Supabase Connection -->
