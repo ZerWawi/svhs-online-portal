@@ -89,6 +89,19 @@ function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.clas
 function showInfo(){alert('The SVHS Online Portal is being designed as a central digital platform for school announcements, learning resources, and services for administrators, teachers, learners, and parents. This preview contains sample content only.')}
 document.getElementById('loginModal').addEventListener('click',e=>{if(e.target.id==='loginModal')closeLogin()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
+</script><!-- Supabase Connection -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://ltpjcxmxkcavdkarxgvi.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_zSAD2WjvVJgrSh4uP1zHrQ_LCYhsoYn";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+console.log("SVHS Portal: Supabase connection initialized.");
 </script>
 </body>
 </html>
