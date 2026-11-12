@@ -101,9 +101,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
 const SUPABASE_URL = "https://ltpjcxmxkcavdkarxgvi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_zSAD2WjvVJgrSh4uP1zHrQ_LCYhsoYn";
 
-const supabaseClient = window.supabase.createClient(
+const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
+);
+
+console.log("SVHS Portal: Supabase client initialized.");
 );
 
 console.log("SVHS Portal: Supabase connection initialized.");
