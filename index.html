@@ -77,6 +77,34 @@ footer{margin-top:38px;background:#102d4c;color:#dbe7f0;padding:25px 22px}.foote
   <button class="quick" onclick="openLogin('Administrator')"><div class="symbol">A</div><b>Administration</b><small>School records and management tools</small></button>
 </div>
 <div class="notice"><strong>Prototype notice:</strong> This is an interactive front-end preview using sample content only. Login is a demonstration and does not authenticate users or connect to a database. Do not enter real passwords or personal information.</div>
+
+<section id="adminDashboard" style="display:none; padding:40px 20px; max-width:1100px; margin:auto;">
+  <h2>Administrator Dashboard</h2>
+  <p id="adminWelcome">Welcome, Administrator!</p>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:25px;">
+    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
+      <h3>Announcements</h3>
+      <p>Create and manage school announcements.</p>
+    </div>
+
+    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
+      <h3>School Events</h3>
+      <p>Manage the school's calendar and activities.</p>
+    </div>
+
+    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
+      <h3>Learning Resources</h3>
+      <p>Organize and manage learning materials.</p>
+    </div>
+
+    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
+      <h3>User Accounts</h3>
+      <p>Manage administrator, teacher, learner, and parent accounts.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 <footer><div class="footer-inner"><div><strong>Santol Vocational High School</strong><br>Santol, La Union, Philippines</div><div>SVHS Online Portal · Initial Prototype<br>Official school information will be published by authorized personnel.</div></div></footer>
 <h3 id="loginTitle">Portal Login</h3>
