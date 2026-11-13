@@ -415,7 +415,63 @@ date.style.cssText = 'display:block; color:#64748b; font-size:12px; border-top:1
     list.appendChild(card);
   });
 }
+async function loadPublicEvents() {
+  const list = document.getElementById('publicEventList');
+  if (!list) return;
 
+  list.textContent = 'Loading school events...';
+
+  const { data, error } = await supabaseClient
+    .from('school_events')
+    .select('title, description, event_date, location')
+    .eq('is_published', true)
+    .gte('event_date', new Date().toISOString().slice(0, 10))
+    .order('event_date', { ascending: true });
+
+  if (error) {
+    console.error(error);
+    list.textContent = 'Unable to load school events at this time.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.textContent = 'No upcoming published events at this time.';
+    return;
+  }
+
+  list.innerHTML = '';
+
+  data.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'calendar-row';
+
+    const dateBox = document.createElement('div');
+    dateBox.className = 'datebox';
+
+    const day = document.createElement('b');
+    const eventDate = new Date(item.event_date + 'T00:00:00');
+    day.textContent = eventDate.getDate();
+
+    const month = document.createElement('span');
+    month.textContent = eventDate.toLocaleDateString('en-US', { month: 'short' });
+
+    dateBox.append(day, month);
+
+    const eventInfo = document.createElement('div');
+    eventInfo.className = 'event';
+
+    const title = document.createElement('b');
+    title.textContent = item.title;
+
+    const details = document.createElement('small');
+    details.textContent = [item.description, item.location]
+      .filter(Boolean).join(' | ');
+
+    eventInfo.append(title, details);
+    row.append(dateBox, eventInfo);
+    list.appendChild(row);
+  });
+}
   function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
