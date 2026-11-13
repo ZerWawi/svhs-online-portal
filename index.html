@@ -224,7 +224,38 @@ async function signInPortal() {
 }
 
 
-function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+async function saveAnnouncement(event) {
+  event.preventDefault();
+
+  const title = document.getElementById('announcementTitle').value.trim();
+  const content = document.getElementById('announcementContent').value.trim();
+  const isPublished = document.getElementById('announcementPublished').checked;
+  const message = document.getElementById('announcementMessage');
+
+  message.textContent = 'Saving announcement...';
+
+  const { error } = await supabaseClient
+    .from('announcements')
+    .insert([{
+      title: title,
+      content: content,
+      is_published: isPublished,
+      published_at: isPublished ? new Date().toISOString() : null
+    }]);
+
+  if (error) {
+    console.error(error);
+    message.textContent = 'Unable to save. Please try again.';
+    return;
+  }
+
+  message.textContent = 'Announcement saved successfully!';
+  document.getElementById('announcementForm').reset();
+  document.getElementById('announcementPublished').checked = true;
+}
+
+  function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
 </script><!-- Supabase Connection -->
