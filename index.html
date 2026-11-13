@@ -283,7 +283,7 @@ async function loadAnnouncements() {
     card.style.cssText = 'padding:15px; margin:12px 0; border:1px solid #ddd; border-radius:8px;';
 
     const title = document.createElement('h4');
-    title.textContent = item.title;
+    title.textContent = item.title; title.style.cssText = 'color:#1e293b; font-size:20px; font-weight:700; margin:0 0 10px;';
 
     const content = document.createElement('p');
     content.textContent = item.content;
