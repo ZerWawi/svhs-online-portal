@@ -406,8 +406,10 @@ async function loadPublicAnnouncements() {
 
     const date = document.createElement('small');
     date.textContent = item.published_at
-      ? 'Published: ' + new Date(item.published_at).toLocaleDateString()
-      : 'Published';
+  ? 'Published: ' + new Date(item.published_at).toLocaleDateString()
+  : 'Published';
+
+date.style.cssText = 'display:block; color:#64748b; font-size:12px; border-top:1px solid #e2e8f0; padding-top:10px;';
 
     card.append(title, content, date);
     list.appendChild(card);
