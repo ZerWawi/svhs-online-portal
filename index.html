@@ -120,7 +120,46 @@ footer{margin-top:38px;background:#102d4c;color:#dbe7f0;padding:25px 22px}.foote
   <h4>Existing Announcements</h4>
   <div id="announcementList">Loading announcements...</div>
 </div>
+<div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
+  <h3>School Events</h3>
+  <p>Create and manage upcoming school events.</p>
 
+  <form id="eventForm" onsubmit="saveEvent(event)">
+    <label for="eventTitle">Event Title</label>
+    <input id="eventTitle" type="text" required
+      placeholder="Enter event title"
+      style="width:100%; padding:10px; margin:8px 0 15px;">
+
+    <label for="eventDescription">Event Description</label>
+    <textarea id="eventDescription"
+      placeholder="Describe the event"
+      style="width:100%; min-height:100px; padding:10px; margin:8px 0 15px;"></textarea>
+
+    <label for="eventDate">Event Date</label>
+    <input id="eventDate" type="date" required
+      style="width:100%; padding:10px; margin:8px 0 15px;">
+
+    <label for="eventLocation">Location or Venue</label>
+    <input id="eventLocation" type="text"
+      placeholder="Enter venue"
+      style="width:100%; padding:10px; margin:8px 0 15px;">
+
+    <label>
+      <input id="eventPublished" type="checkbox" checked>
+      Publish event immediately
+    </label>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:15px;">
+      Save Event
+    </button>
+  </form>
+
+  <p id="eventMessage"></p>
+
+  <hr style="margin:20px 0;">
+  <h4>Existing Events</h4>
+  <div id="eventList">Loading events...</div>
+</div>
   </div>
 </section>
 
