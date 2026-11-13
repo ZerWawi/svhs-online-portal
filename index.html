@@ -503,6 +503,60 @@ async function loadEvents() {
     list.appendChild(card);
   });
 }
+  async function editEvent(item) {
+  const title = prompt('Edit event title:', item.title);
+  if (title === null) return;
+
+  const description = prompt('Edit event description:', item.description || '');
+  if (description === null) return;
+
+  const eventDate = prompt('Edit event date (YYYY-MM-DD):', item.event_date.slice(0, 10));
+  if (eventDate === null) return;
+
+  const location = prompt('Edit event location:', item.location || '');
+  if (location === null) return;
+
+  if (!title.trim() || !eventDate.trim()) {
+    alert('Event title and date are required.');
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('school_events')
+    .update({
+      title: title.trim(),
+      description: description.trim(),
+      event_date: eventDate.trim(),
+      location: location.trim()
+    })
+    .eq('id', item.id);
+
+  if (error) {
+    console.error(error);
+    alert('Unable to update event.');
+    return;
+  }
+
+  alert('Event updated successfully!');
+  loadEvents();
+  loadPublicEvents();
+}
+
+async function toggleEvent(id, currentStatus) {
+  const { error } = await supabaseClient
+    .from('school_events')
+    .update({ is_published: !currentStatus })
+    .eq('id', id);
+
+  if (error) {
+    console.error(error);
+    alert('Unable to change event publication status.');
+    return;
+  }
+
+  loadEvents();
+  loadPublicEvents();
+}
 async function loadPublicAnnouncements() {
   const list = document.getElementById('publicAnnouncementList');
 
