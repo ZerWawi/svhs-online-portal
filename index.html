@@ -369,6 +369,50 @@ async function editAnnouncement(id) {
   loadAnnouncements();
 }
 
+async function loadPublicAnnouncements() {
+  const list = document.getElementById('publicAnnouncementList');
+
+  list.textContent = 'Loading announcements...';
+
+  const { data, error } = await supabaseClient
+    .from('announcements')
+    .select('title, content, published_at')
+    .eq('is_published', true)
+    .order('published_at', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    list.textContent = 'Unable to load announcements at this time.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.textContent = 'There are no published announcements at this time.';
+    return;
+  }
+
+  list.innerHTML = '';
+
+  data.forEach(item => {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#f1f5f9; padding:20px; margin:15px 0; border-radius:10px;';
+
+    const title = document.createElement('h3');
+    title.textContent = item.title;
+
+    const content = document.createElement('p');
+    content.textContent = item.content;
+
+    const date = document.createElement('small');
+    date.textContent = item.published_at
+      ? 'Published: ' + new Date(item.published_at).toLocaleDateString()
+      : 'Published';
+
+    card.append(title, content, date);
+    list.appendChild(card);
+  });
+}
+
   function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
