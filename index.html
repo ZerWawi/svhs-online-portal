@@ -485,7 +485,51 @@ async function editAnnouncement(id) {
   alert('Announcement updated successfully!');
   loadAnnouncements();
 }
+async function loadEvents() {
+  const list = document.getElementById('eventList');
+  if (!list) return;
 
+  list.textContent = 'Loading events...';
+
+  const { data, error } = await supabaseClient
+    .from('school_events')
+    .select('id, title, description, event_date, location, is_published')
+    .order('event_date', { ascending: true });
+
+  if (error) {
+    console.error(error);
+    list.textContent = 'Unable to load events.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.textContent = 'No events have been added yet.';
+    return;
+  }
+
+  list.innerHTML = '';
+
+  data.forEach(item => {
+    const card = document.createElement('div');
+    card.style.cssText = 'padding:15px; margin:12px 0; border:1px solid #ddd; border-radius:8px;';
+
+    const title = document.createElement('h4');
+    title.textContent = item.title;
+
+    const details = document.createElement('p');
+    details.textContent = [
+      item.event_date,
+      item.location,
+      item.description
+    ].filter(Boolean).join(' | ');
+
+    const status = document.createElement('small');
+    status.textContent = item.is_published ? 'Published' : 'Unpublished';
+
+    card.append(title, details, status);
+    list.appendChild(card);
+  });
+}
 async function loadPublicAnnouncements() {
   const list = document.getElementById('publicAnnouncementList');
 
