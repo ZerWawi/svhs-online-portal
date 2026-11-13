@@ -113,6 +113,7 @@ function closeLogin() {
 
 
 
+
 async function signInPortal() {
   const modal = document.getElementById('loginModal');
   const email = modal.querySelector('#username').value.trim();
@@ -162,37 +163,6 @@ async function signInPortal() {
   }
 }
 
-
-
-  result.textContent = 'Signing in...';
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
-
-  if (error) {
-    result.textContent = 'Sign-in failed. Please check your email and password.';
-    return;
-  }
-
-  const { data: profile, error: profileError } = await supabaseClient
-    .from('profiles')
-    .select('full_name, role')
-    .eq('id', data.user.id)
-    .single();
-
-  if (profileError || !profile) {
-    await supabaseClient.auth.signOut();
-    result.textContent = 'No portal profile was found for this account. Please contact the portal administrator.';
-    return;
-  }
-
-  result.textContent = 'Welcome, ' + profile.full_name +
-    '! You are signed in as ' + profile.role + '.';
-
-  document.getElementById('password').value = '';
-}
 
 function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
