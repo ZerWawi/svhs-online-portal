@@ -291,7 +291,18 @@ async function loadAnnouncements() {
     const status = document.createElement('small');
     status.textContent = item.is_published ? 'Published' : 'Draft';
 
-    card.append(title, content, status);
+    const editButton = document.createElement('button');
+editButton.textContent = 'Edit';
+editButton.className = 'btn btn-outline';
+editButton.style.marginRight = '8px';
+editButton.onclick = () => editAnnouncement(item.id);
+
+const toggleButton = document.createElement('button');
+toggleButton.textContent = item.is_published ? 'Unpublish' : 'Publish';
+toggleButton.className = 'btn btn-primary';
+toggleButton.onclick = () => toggleAnnouncement(item.id, item.is_published);
+
+card.append(title, content, status, document.createElement('br'), editButton, toggleButton);
     list.appendChild(card);
   });
 }
