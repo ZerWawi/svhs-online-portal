@@ -293,7 +293,39 @@ async function saveAnnouncement(event) {
   document.getElementById('announcementForm').reset();
   document.getElementById('announcementPublished').checked = true;
 }
+async function saveEvent(event) {
+  event.preventDefault();
 
+  const title = document.getElementById('eventTitle').value.trim();
+  const description = document.getElementById('eventDescription').value.trim();
+  const eventDate = document.getElementById('eventDate').value;
+  const location = document.getElementById('eventLocation').value.trim();
+  const isPublished = document.getElementById('eventPublished').checked;
+  const message = document.getElementById('eventMessage');
+
+  message.textContent = 'Saving event...';
+
+  const { error } = await supabaseClient
+    .from('school_events')
+    .insert([{
+      title: title,
+      description: description,
+      event_date: eventDate,
+      location: location,
+      is_published: isPublished
+    }]);
+
+  if (error) {
+    console.error(error);
+    message.textContent = 'Unable to save event. Please check database permissions.';
+    return;
+  }
+
+  message.textContent = 'Event saved successfully!';
+  document.getElementById('eventForm').reset();
+  document.getElementById('eventPublished').checked = true;
+  loadEvents();
+}
 async function loadAnnouncements() {
   const list = document.getElementById('announcementList');
 
