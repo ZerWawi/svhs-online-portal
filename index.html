@@ -342,6 +342,44 @@ async function loadAnnouncements() {
     list.textContent = 'Unable to load announcements.';
     return;
   }
+
+  if (!data || data.length === 0) {
+    list.textContent = 'No announcements yet.';
+    return;
+  }
+
+  list.innerHTML = '';
+
+  data.forEach(item => {
+    const card = document.createElement('div');
+    card.style.cssText = 'padding:15px; margin:12px 0; border:1px solid #ddd; border-radius:8px;';
+
+    const title = document.createElement('h4');
+    title.textContent = item.title;
+    title.style.cssText = 'color:#1e293b; font-size:20px; font-weight:700; margin:0 0 10px;';
+
+    const content = document.createElement('p');
+    content.textContent = item.content;
+    content.style.cssText = 'color:#475569; font-size:15px; line-height:1.7; margin:0 0 14px;';
+
+    const status = document.createElement('small');
+    status.textContent = item.is_published ? 'Published' : 'Draft';
+
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.className = 'btn btn-outline';
+    editButton.style.marginRight = '8px';
+    editButton.onclick = () => editAnnouncement(item.id);
+
+    const toggleButton = document.createElement('button');
+    toggleButton.textContent = item.is_published ? 'Unpublish' : 'Publish';
+    toggleButton.className = 'btn btn-primary';
+    toggleButton.onclick = () => toggleAnnouncement(item.id, item.is_published);
+
+    card.append(title, content, status, document.createElement('br'), editButton, toggleButton);
+    list.appendChild(card);
+  });
+}
 async function loadEvents() {
   const list = document.getElementById('eventList');
   if (!list) return;
