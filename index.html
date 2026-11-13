@@ -307,6 +307,27 @@ card.append(title, content, status, document.createElement('br'), editButton, to
   });
 }
 
+async function toggleAnnouncement(id, currentStatus) {
+  const newStatus = !currentStatus;
+
+  const { error } = await supabaseClient
+    .from('announcements')
+    .update({
+      is_published: newStatus,
+      published_at: newStatus ? new Date().toISOString() : null
+    })
+    .eq('id', id);
+
+  if (error) {
+    console.error(error);
+    alert('Unable to update announcement.');
+    return;
+  }
+
+  alert(newStatus ? 'Announcement published!' : 'Announcement unpublished!');
+  loadAnnouncements();
+}
+
   function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
