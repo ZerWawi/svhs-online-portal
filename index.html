@@ -328,6 +328,47 @@ async function toggleAnnouncement(id, currentStatus) {
   loadAnnouncements();
 }
 
+async function editAnnouncement(id) {
+  const { data, error } = await supabaseClient
+    .from('announcements')
+    .select('title, content')
+    .eq('id', id)
+    .single();
+
+  if (error || !data) {
+    alert('Unable to load announcement.');
+    return;
+  }
+
+  const newTitle = prompt('Edit announcement title:', data.title);
+  if (newTitle === null) return;
+
+  const newContent = prompt('Edit announcement details:', data.content);
+  if (newContent === null) return;
+
+  if (!newTitle.trim() || !newContent.trim()) {
+    alert('Title and details cannot be empty.');
+    return;
+  }
+
+  const { error: updateError } = await supabaseClient
+    .from('announcements')
+    .update({
+      title: newTitle.trim(),
+      content: newContent.trim()
+    })
+    .eq('id', id);
+
+  if (updateError) {
+    console.error(updateError);
+    alert('Unable to save changes.');
+    return;
+  }
+
+  alert('Announcement updated successfully!');
+  loadAnnouncements();
+}
+
   function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
