@@ -88,20 +88,39 @@ footer{margin-top:38px;background:#102d4c;color:#dbe7f0;padding:25px 22px}.foote
       <p>Create and manage school announcements.</p>
     </div>
 
-    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
-      <h3>School Events</h3>
-      <p>Manage the school's calendar and activities.</p>
-    </div>
+    
+<div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
+  <h3>Announcements</h3>
+  <p>Create and manage school announcements.</p>
 
-    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
-      <h3>Learning Resources</h3>
-      <p>Organize and manage learning materials.</p>
-    </div>
+  <form id="announcementForm" onsubmit="saveAnnouncement(event)">
+    <label for="announcementTitle">Announcement Title</label>
+    <input id="announcementTitle" type="text" required
+      placeholder="Enter announcement title"
+      style="width:100%; padding:10px; margin:8px 0 15px;">
 
-    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
-      <h3>User Accounts</h3>
-      <p>Manage administrator, teacher, learner, and parent accounts.</p>
-    </div>
+    <label for="announcementContent">Announcement Details</label>
+    <textarea id="announcementContent" required
+      placeholder="Write the announcement here"
+      style="width:100%; min-height:120px; padding:10px; margin:8px 0 15px;"></textarea>
+
+    <label>
+      <input id="announcementPublished" type="checkbox" checked>
+      Publish announcement immediately
+    </label>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:15px;">
+      Save Announcement
+    </button>
+  </form>
+
+  <p id="announcementMessage"></p>
+
+  <hr style="margin:20px 0;">
+  <h4>Existing Announcements</h4>
+  <div id="announcementList">Loading announcements...</div>
+</div>
+
   </div>
 </section>
 
