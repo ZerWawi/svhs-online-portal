@@ -180,10 +180,23 @@ async function signInPortal() {
       return;
     }
 
-    result.textContent = 'Welcome, ' + profile.full_name +
-      '! You are signed in as ' + profile.role + '.';
+    if (profile.role === 'administrator') {
+  document.getElementById('adminWelcome').textContent =
+    'Welcome, ' + profile.full_name + '!';
 
-    modal.querySelector('#password').value = '';
+  document.getElementById('adminDashboard').style.display = 'block';
+
+  modal.querySelector('#password').value = '';
+  closeLogin();
+
+  document.getElementById('adminDashboard').scrollIntoView({
+    behavior: 'smooth'
+  });
+} else {
+  result.textContent = 'You are signed in as ' + profile.role +
+    '. Your dashboard is not yet available.';
+  modal.querySelector('#password').value = '';
+}
 
   } catch (err) {
     result.textContent = 'Connection error. Please try again.';
