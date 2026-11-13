@@ -204,7 +204,7 @@ async function signInPortal() {
     'Welcome, ' + profile.full_name + '!';
 
   document.getElementById('adminDashboard').style.display = 'block';
-
+loadAnnouncements();
   modal.querySelector('#password').value = '';
   closeLogin();
 
