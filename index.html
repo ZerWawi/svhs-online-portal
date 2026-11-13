@@ -255,6 +255,47 @@ async function saveAnnouncement(event) {
   document.getElementById('announcementPublished').checked = true;
 }
 
+async function loadAnnouncements() {
+  const list = document.getElementById('announcementList');
+
+  list.textContent = 'Loading announcements...';
+
+  const { data, error } = await supabaseClient
+    .from('announcements')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    list.textContent = 'Unable to load announcements.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.textContent = 'No announcements yet.';
+    return;
+  }
+
+  list.innerHTML = '';
+
+  data.forEach(item => {
+    const card = document.createElement('div');
+    card.style.cssText = 'padding:15px; margin:12px 0; border:1px solid #ddd; border-radius:8px;';
+
+    const title = document.createElement('h4');
+    title.textContent = item.title;
+
+    const content = document.createElement('p');
+    content.textContent = item.content;
+
+    const status = document.createElement('small');
+    status.textContent = item.is_published ? 'Published' : 'Draft';
+
+    card.append(title, content, status);
+    list.appendChild(card);
+  });
+}
+
   function navTo(id,el){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));el.classList.add('active');if(id==='home')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
