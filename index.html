@@ -78,90 +78,136 @@ footer{margin-top:38px;background:#102d4c;color:#dbe7f0;padding:25px 22px}.foote
 </div>
 <div class="notice"><strong>Prototype notice:</strong> This is an interactive front-end preview using sample content only. Login is a demonstration and does not authenticate users or connect to a database. Do not enter real passwords or personal information.</div>
 
-<section id="adminDashboard" style="display:none; padding:40px 20px; max-width:1100px; margin:auto;">
-  <h2>Administrator Dashboard</h2>
-  <p id="adminWelcome">Welcome, Administrator!</p>
 
-  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:25px;">
-    <div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
-      <h3>Announcements</h3>
-      <p>Create and manage school announcements.</p>
-    </div>
+<section id="adminDashboard" style="display:none; max-width:1250px; margin:0 auto; padding:30px 22px;">
 
-    
-<div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
-  <h3>Announcements</h3>
-  <p>Create and manage school announcements.</p>
-
-  <form id="announcementForm" onsubmit="saveAnnouncement(event)">
-    <label for="announcementTitle">Announcement Title</label>
-    <input id="announcementTitle" type="text" required
-      placeholder="Enter announcement title"
-      style="width:100%; padding:10px; margin:8px 0 15px;">
-
-    <label for="announcementContent">Announcement Details</label>
-    <textarea id="announcementContent" required
-      placeholder="Write the announcement here"
-      style="width:100%; min-height:120px; padding:10px; margin:8px 0 15px;"></textarea>
-
-    <label>
-      <input id="announcementPublished" type="checkbox" checked>
-      Publish announcement immediately
-    </label>
-
-    <button type="submit" class="btn btn-primary" style="margin-top:15px;">
-      Save Announcement
-    </button>
-  </form>
-
-  <p id="announcementMessage"></p>
-
-  <hr style="margin:20px 0;">
-  <h4>Existing Announcements</h4>
-  <div id="announcementList">Loading announcements...</div>
-</div>
-<div style="padding:25px; border:1px solid #ddd; border-radius:10px;">
-  <h3>School Events</h3>
-  <p>Create and manage upcoming school events.</p>
-
-  <form id="eventForm" onsubmit="saveEvent(event)">
-    <label for="eventTitle">Event Title</label>
-    <input id="eventTitle" type="text" required
-      placeholder="Enter event title"
-      style="width:100%; padding:10px; margin:8px 0 15px;">
-
-    <label for="eventDescription">Event Description</label>
-    <textarea id="eventDescription"
-      placeholder="Describe the event"
-      style="width:100%; min-height:100px; padding:10px; margin:8px 0 15px;"></textarea>
-
-    <label for="eventDate">Event Date</label>
-    <input id="eventDate" type="date" required
-      style="width:100%; padding:10px; margin:8px 0 15px;">
-
-    <label for="eventLocation">Location or Venue</label>
-    <input id="eventLocation" type="text"
-      placeholder="Enter venue"
-      style="width:100%; padding:10px; margin:8px 0 15px;">
-
-    <label>
-      <input id="eventPublished" type="checkbox" checked>
-      Publish event immediately
-    </label>
-
-    <button type="submit" class="btn btn-primary" style="margin-top:15px;">
-      Save Event
-    </button>
-  </form>
-
-  <p id="eventMessage"></p>
-
-  <hr style="margin:20px 0;">
-  <h4>Existing Events</h4>
-  <div id="eventList">Loading events...</div>
-</div>
+  <!-- DASHBOARD HEADER -->
+  <div style="background:linear-gradient(120deg,#12345a,#1d5f91); color:white; padding:30px; border-radius:16px; margin-bottom:24px;">
+    <div style="font-size:11px; color:#f1cf79; font-weight:800; letter-spacing:1.5px;">SVHS ONLINE PORTAL</div>
+    <h2 style="margin:8px 0; font-size:27px;">Administrator Dashboard</h2>
+    <p id="adminWelcome" style="margin:0; color:#dce8f5;">Welcome, Administrator!</p>
   </div>
+
+  <!-- DASHBOARD NAVIGATION -->
+  <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:25px;">
+    <a href="#adminOverview" class="btn btn-primary" style="text-decoration:none;">Dashboard</a>
+    <a href="#adminAnnouncements" class="btn btn-outline" style="text-decoration:none;">Announcements</a>
+    <a href="#adminEvents" class="btn btn-outline" style="text-decoration:none;">School Events</a>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="adminOverview" style="margin-bottom:25px;">
+    <h3 style="color:#12345a; margin-bottom:6px;">Portal Management</h3>
+    <p style="color:#64748b; margin-top:0;">Manage school information and public updates.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px;">
+
+      <a href="#adminAnnouncements" style="text-decoration:none; color:inherit;">
+        <div style="background:white; padding:22px; border:1px solid #dce5ed; border-radius:13px;">
+          <div style="font-size:25px;">📢</div>
+          <h3 style="color:#12345a; margin:8px 0 4px;">Announcements</h3>
+          <p style="color:#64748b; font-size:13px; margin:0;">Create and manage school announcements.</p>
+        </div>
+      </a>
+
+      <a href="#adminEvents" style="text-decoration:none; color:inherit;">
+        <div style="background:white; padding:22px; border:1px solid #dce5ed; border-radius:13px;">
+          <div style="font-size:25px;">📅</div>
+          <h3 style="color:#12345a; margin:8px 0 4px;">School Events</h3>
+          <p style="color:#64748b; font-size:13px; margin:0;">Manage upcoming school activities and events.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENTS -->
+  <div id="adminAnnouncements" style="background:white; padding:25px; border:1px solid #dce5ed; border-radius:14px; margin-bottom:24px;">
+
+    <h3 style="color:#12345a; margin-top:0;">📢 Announcement Management</h3>
+    <p style="color:#64748b;">Create and manage official school announcements.</p>
+
+    <form id="announcementForm" onsubmit="saveAnnouncement(event)">
+
+      <label for="announcementTitle">Announcement Title</label>
+      <input id="announcementTitle" type="text" required
+        placeholder="Enter announcement title"
+        style="width:100%; padding:12px; margin:8px 0 16px; border:1px solid #cbd7e1; border-radius:8px;">
+
+      <label for="announcementContent">Announcement Details</label>
+      <textarea id="announcementContent" required
+        placeholder="Write the announcement here"
+        style="width:100%; min-height:120px; padding:12px; margin:8px 0 16px; border:1px solid #cbd7e1; border-radius:8px;"></textarea>
+
+      <label style="display:block;">
+        <input id="announcementPublished" type="checkbox" checked>
+        Publish announcement immediately
+      </label>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:15px;">
+        Save Announcement
+      </button>
+
+    </form>
+
+    <p id="announcementMessage"></p>
+
+    <hr style="margin:25px 0; border:0; border-top:1px solid #dce5ed;">
+
+    <h4 style="color:#12345a;">Existing Announcements</h4>
+    <div id="announcementList">Loading announcements...</div>
+
+  </div>
+
+  <!-- SCHOOL EVENTS -->
+  <div id="adminEvents" style="background:white; padding:25px; border:1px solid #dce5ed; border-radius:14px;">
+
+    <h3 style="color:#12345a; margin-top:0;">📅 School Events Management</h3>
+    <p style="color:#64748b;">Create and manage upcoming school events.</p>
+
+    <form id="eventForm" onsubmit="saveEvent(event)">
+
+      <label for="eventTitle">Event Title</label>
+      <input id="eventTitle" type="text" required
+        placeholder="Enter event title"
+        style="width:100%; padding:12px; margin:8px 0 16px; border:1px solid #cbd7e1; border-radius:8px;">
+
+      <label for="eventDescription">Event Description</label>
+      <textarea id="eventDescription"
+        placeholder="Describe the event"
+        style="width:100%; min-height:100px; padding:12px; margin:8px 0 16px; border:1px solid #cbd7e1; border-radius:8px;"></textarea>
+
+      <label for="eventDate">Event Date</label>
+      <input id="eventDate" type="date" required
+        style="width:100%; padding:12px; margin:8px 0 16px; border:1px solid #cbd7e1; border-radius:8px;">
+
+      <label for="eventLocation">Location or Venue</label>
+      <input id="eventLocation" type="text"
+        placeholder="Enter venue"
+        style="width:100%; padding:12px; margin:8px 0 16px; border:1px solid #cbd7e1; border-radius:8px;">
+
+      <label style="display:block;">
+        <input id="eventPublished" type="checkbox" checked>
+        Publish event immediately
+      </label>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:15px;">
+        Save Event
+      </button>
+
+    </form>
+
+    <p id="eventMessage"></p>
+
+    <hr style="margin:25px 0; border:0; border-top:1px solid #dce5ed;">
+
+    <h4 style="color:#12345a;">Existing Events</h4>
+    <div id="eventList">Loading events...</div>
+
+  </div>
+
 </section>
+
 
 </main>
 <footer><div class="footer-inner"><div><strong>Santol Vocational High School</strong><br>Santol, La Union, Philippines</div><div>SVHS Online Portal · Initial Prototype<br>Official school information will be published by authorized personnel.</div></div></footer>
