@@ -745,8 +745,8 @@ async function loadPublicEvents() {
 document.getElementById('loginModal')?.addEventListener('click', e => {   if (e.target.id === 'loginModal') closeLogin(); });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()});
 </script><!-- Supabase Connection -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 const SUPABASE_URL = "https://ltpjcxmxkcavdkarxgvi.supabase.co";
@@ -758,9 +758,70 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log("SVHS Portal: Supabase client initialized.");
-  loadPublicAnnouncements();
-  loadPublicEvents();
+
+loadPublicAnnouncements();
+loadPublicEvents();
+
+
+// ========================================
+// RESTORE EXISTING PORTAL SESSION
+// ========================================
+
+async function restorePortalSession() {
+
+    const { data: { session }, error } =
+        await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error("Session restoration error:", error);
+        return;
+    }
+
+    if (!session) {
+        console.log("No active portal session.");
+        return;
+    }
+
+    console.log("Existing portal session detected.");
+
+    const { data: profile, error: profileError } =
+        await supabaseClient
+            .from('profiles')
+            .select('full_name, role')
+            .eq('id', session.user.id)
+            .single();
+
+    if (profileError || !profile) {
+        console.error("Profile restoration failed:", profileError);
+        return;
+    }
+
+    if (profile.role === 'administrator') {
+
+        document.getElementById('adminWelcome').textContent =
+            'Welcome, ' + profile.full_name + '!';
+
+        document.getElementById('adminDashboard').style.display = 'block';
+
+        loadAnnouncements();
+        loadEvents();
+
+        closeLogin();
+
+        console.log("Administrator dashboard restored successfully.");
+
+    } else {
+
+        console.log("Signed-in user role:", profile.role);
+
+    }
+}
+
+// Run session restoration
+restorePortalSession();
+
 </script>
+
 
 
 <section id="school-calendar" style="padding:40px 20px; max-width:1000px; margin:auto;">
