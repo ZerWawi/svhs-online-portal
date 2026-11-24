@@ -239,10 +239,32 @@ footer{margin-top:38px;background:#102d4c;color:#dbe7f0;padding:25px 22px}.foote
 
   <hr style="margin:20px 0; border:0; border-top:1px solid #dce5ed;">
 
-  <h4 style="color:#12345a;">Registered Portal Users</h4>
+    <h4 style="color:#12345a;">Registered Portal Users</h4>
+
+  <div style="display:flex; flex-wrap:wrap; gap:12px; margin:15px 0;">
+    <input
+      type="text"
+      id="userSearch"
+      placeholder="Search users by name..."
+      oninput="filterUsers()"
+      style="flex:1; min-width:220px; padding:11px; border:1px solid #cbd5e1; border-radius:8px;"
+    >
+
+    <select
+      id="userRoleFilter"
+      onchange="filterUsers()"
+      style="min-width:180px; padding:11px; border:1px solid #cbd5e1; border-radius:8px;"
+    >
+      <option value="">All Roles</option>
+      <option value="administrator">Administrator</option>
+      <option value="teacher">Teacher</option>
+      <option value="learner">Learner</option>
+      <option value="parent">Parent</option>
+    </select>
+  </div>
 
   <div id="userList">
-    <p style="color:#64748b;">User account management will be connected to Supabase.</p>
+    <p style="color:#64748b;">Registered users will appear here.</p>
   </div>
 
 </div>
